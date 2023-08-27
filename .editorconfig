@@ -1,0 +1,25 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+
+# estilo de indentação
+indent_style = space
+
+# indentação, precisa no minimo 2 espaços
+indent_size = 2
+
+# tipo de caractere de fim de linha
+end_of_line = crlf
+
+# tipo de codificação utilizado
+charset = utf-8
+
+# Indica que espaços em branco no final de uma linha serão removidos automaticamente.
+trim_trailing_whitespace = true
+
+# quando salva o arquivo, não adiciona uma linha no final
+insert_final_newline = false
+
