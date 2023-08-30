@@ -3,7 +3,7 @@
     "target": "es2016",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "commonjs",        
+    "module": "commonjs",
     "moduleResolution": "node",
     "baseUrl": ".",
     "resolveJsonModule": true,
@@ -13,6 +13,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictPropertyInitialization": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "skipLibCheck": true
   },
   "include": [
