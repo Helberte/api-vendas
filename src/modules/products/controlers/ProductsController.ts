@@ -13,7 +13,7 @@ export default class ProductsController{
 
     const products = await listProducts.execute();
 
-    return response.json(products);
+    return response.json( { produtos: products});
   }
 
   public async show(request: Request, response: Response) : Promise<Response> {
@@ -23,7 +23,7 @@ export default class ProductsController{
 
     const product = await showProducts.execute({ id });
 
-    return response.json(product);
+    return response.json({ produto: product});
   }
 
   public async create(request: Request, response: Response): Promise<Response>{
@@ -36,9 +36,13 @@ export default class ProductsController{
       throw new AppError('O parameto quantity aceita somente numeros.');
 
     const createProduct = new CreateProductService();
-    const product = await createProduct.execute({ name, price, quantity });
+    const product = await createProduct.execute({
+      name: (name as string).toUpperCase(),
+      price,
+      quantity
+    });
 
-    return response.json( product );
+    return response.json( { produto: product} );
   }
 
   public async update(request: Request, response: Response): Promise<Response>{
@@ -52,9 +56,14 @@ export default class ProductsController{
       throw new AppError('O parameto quantity aceita somente numeros.');
 
     const updateProduct = new UpdateProductService();
-    const product = await updateProduct.execute({ id, name, price, quantity });
+    const product = await updateProduct.execute({
+      id: id,
+      name: (name as string).toUpperCase(),
+      price: price,
+      quantity: quantity
+    });
 
-    return response.json( product );
+    return response.json( { produto: product} );
   }
 
   public async delete(request: Request, response: Response): Promise<Response>{
@@ -63,6 +72,6 @@ export default class ProductsController{
     const deleteProduct = new DeleteProductService();
     await deleteProduct.execute({ id });
 
-    return response.json([]);
+    return response.json({ mensagem: "Produto deletado com sucesso."});
   }
 }

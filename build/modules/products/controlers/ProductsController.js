@@ -23,7 +23,7 @@ class ProductsController {
         return __awaiter(this, void 0, void 0, function* () {
             const listProducts = new ListProductService_1.default();
             const products = yield listProducts.execute();
-            return response.json(products);
+            return response.json({ produtos: products });
         });
     }
     show(request, response) {
@@ -31,7 +31,7 @@ class ProductsController {
             const { id } = request.params;
             const showProducts = new ShowProductService_1.default();
             const product = yield showProducts.execute({ id });
-            return response.json(product);
+            return response.json({ produto: product });
         });
     }
     create(request, response) {
@@ -43,7 +43,7 @@ class ProductsController {
                 throw new AppError_1.default('O parameto quantity aceita somente numeros.');
             const createProduct = new CreateProductService_1.default();
             const product = yield createProduct.execute({ name, price, quantity });
-            return response.json(product);
+            return response.json({ produto: product });
         });
     }
     update(request, response) {
@@ -56,7 +56,7 @@ class ProductsController {
                 throw new AppError_1.default('O parameto quantity aceita somente numeros.');
             const updateProduct = new UpdateProductService_1.default();
             const product = yield updateProduct.execute({ id, name, price, quantity });
-            return response.json(product);
+            return response.json({ produto: product });
         });
     }
     delete(request, response) {
@@ -64,7 +64,7 @@ class ProductsController {
             const { id } = request.params;
             const deleteProduct = new DeleteProductservice_1.default();
             yield deleteProduct.execute({ id });
-            return response.json([]);
+            return response.json({ mensagem: "Produto deletado com sucesso." });
         });
     }
 }
