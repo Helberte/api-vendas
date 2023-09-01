@@ -35,9 +35,11 @@
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "celebrate": "^15.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "joi": "^17.10.1",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
