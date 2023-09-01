@@ -42,7 +42,11 @@ class ProductsController {
             if (typeof quantity !== "number")
                 throw new AppError_1.default('O parameto quantity aceita somente numeros.');
             const createProduct = new CreateProductService_1.default();
-            const product = yield createProduct.execute({ name, price, quantity });
+            const product = yield createProduct.execute({
+                name: name.toUpperCase(),
+                price,
+                quantity
+            });
             return response.json({ produto: product });
         });
     }
@@ -55,7 +59,12 @@ class ProductsController {
             if (typeof quantity !== "number")
                 throw new AppError_1.default('O parameto quantity aceita somente numeros.');
             const updateProduct = new UpdateProductService_1.default();
-            const product = yield updateProduct.execute({ id, name, price, quantity });
+            const product = yield updateProduct.execute({
+                id: id,
+                name: name.toUpperCase(),
+                price: price,
+                quantity: quantity
+            });
             return response.json({ produto: product });
         });
     }
