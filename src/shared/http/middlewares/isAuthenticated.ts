@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 import AppError from "src/shared/errors/AppError";
 import authConfig from "src/config/auth";
 
-interface TokenPayload{
+interface ITokenPayload{
   iat: number,
   exp: number,
   sub: string
@@ -27,7 +27,7 @@ export default function isAuthenticated(request: Request, response: Response, ne
     // caso não de erro é porque está autorizado
     const decodeToken = verify(token, authConfig.jwt.secret);
 
-    const { sub } = decodeToken as TokenPayload;
+    const { sub } = decodeToken as ITokenPayload;
 
     request.user = {
       id: sub

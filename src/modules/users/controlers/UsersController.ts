@@ -7,7 +7,7 @@ export default class UsersController{
     const listUsers = new ListUserService();
     const users     = await listUsers.execute();
 
-    return response.json( { usuarios: users } );
+    return response.json({ usuarios: users });
   }
 
   public async create(request: Request, response: Response) : Promise<Response> {
