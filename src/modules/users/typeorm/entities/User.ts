@@ -19,8 +19,8 @@ export default class User{
   avatar: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @CreateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 }
