@@ -3,6 +3,7 @@ import { UsersRepository } from "../typeorm/repositories/UsersRepository";
 import AppError from "src/shared/errors/AppError";
 import User from "../typeorm/entities/User";
 import { compare } from "bcryptjs";
+import { sign } from "jsonwebtoken";
 
 interface IRequest{
   email: string;
@@ -11,6 +12,7 @@ interface IRequest{
 
 interface IResponse{
   user: User;
+  token: string;
 }
 
 class CreateSessionsService{
@@ -28,7 +30,15 @@ class CreateSessionsService{
     if(!passwordConfirmed)
       throw new AppError('Dados incorretos: Email/Senha..', 401);
 
-    return { user: userEmail };
+    const token = sign({ userId: userEmail.id }, 'ac2b7893067c581dc0f4f3b6e0441d95', {
+      subject: userEmail.id,
+      expiresIn: '1d'
+    });
+
+    return {
+      user: userEmail,
+      token: token
+    };
   }
 }
 

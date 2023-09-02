@@ -16,6 +16,7 @@ const typeorm_1 = require("typeorm");
 const UsersRepository_1 = require("../typeorm/repositories/UsersRepository");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
 const bcryptjs_1 = require("bcryptjs");
+const jsonwebtoken_1 = require("jsonwebtoken");
 class CreateSessionsService {
     execute({ email, password }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27,7 +28,14 @@ class CreateSessionsService {
             const passwordConfirmed = yield (0, bcryptjs_1.compare)(password, userEmail.password);
             if (!passwordConfirmed)
                 throw new AppError_1.default('Dados incorretos: Email/Senha..', 401);
-            return { user: userEmail };
+            const token = (0, jsonwebtoken_1.sign)({ userId: userEmail.id }, 'ac2b7893067c581dc0f4f3b6e0441d95', {
+                subject: userEmail.id,
+                expiresIn: '1d'
+            });
+            return {
+                user: userEmail,
+                token: token
+            };
         });
     }
 }
