@@ -1,12 +1,13 @@
 import { Router } from "express";
 import UsersController from "../controlers/UsersController";
-import { celebrate, Joi, Segments } from "celebrate"; 'celebrate';
+import { celebrate, Joi, Segments } from "celebrate";
+import isAuthenticated from "src/modules/middlewares/isAuthenticated";
 
 const usersRouter = Router();
 const usersController = new UsersController();
 
 // lista usuarios
-usersRouter.get('/', usersController.index);
+usersRouter.get('/', isAuthenticated, usersController.index);
 
 // create users
 usersRouter.post('/',

@@ -4,6 +4,7 @@ import AppError from "src/shared/errors/AppError";
 import User from "../typeorm/entities/User";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import authConfig from 'src/config/auth';
 
 interface IRequest{
   email: string;
@@ -30,9 +31,10 @@ class CreateSessionsService{
     if(!passwordConfirmed)
       throw new AppError('Dados incorretos: Email/Senha..', 401);
 
-    const token = sign({ userId: userEmail.id }, 'ac2b7893067c581dc0f4f3b6e0441d95', {
+    // este metodo cria o token com base neste segundo parametro, ele meio que assina o token com base neste
+    const token = sign({ userId: userEmail.id }, authConfig.jwt.secret, {
       subject: userEmail.id,
-      expiresIn: '1d'
+      expiresIn: authConfig.jwt.expiresIn
     });
 
     return {
