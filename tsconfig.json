@@ -15,7 +15,11 @@
     "strictPropertyInitialization": false,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types"
+    ]
   },
   "include": [
     "src/**/*"

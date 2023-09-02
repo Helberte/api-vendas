@@ -18,7 +18,10 @@ function isAuthenticated(request, response, next) {
     try {
         // caso não de erro é porque está autorizado
         const decodeToken = (0, jsonwebtoken_1.verify)(token, auth_1.default.jwt.secret);
-        console.log(decodeToken);
+        const { sub } = decodeToken;
+        request.user = {
+            id: sub
+        };
         return next();
     }
     catch (_a) {
