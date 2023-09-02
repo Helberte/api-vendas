@@ -3,6 +3,12 @@ import { verify } from "jsonwebtoken";
 import AppError from "src/shared/errors/AppError";
 import authConfig from "src/config/auth";
 
+interface TokenPayload{
+  iat: number,
+  exp: number,
+  sub: string
+}
+
 export default function isAuthenticated(request: Request, response: Response, next: NextFunction): void {
 
   // pega o token que o usuário enviou no header da requisição
@@ -20,6 +26,12 @@ export default function isAuthenticated(request: Request, response: Response, ne
 
     // caso não de erro é porque está autorizado
     const decodeToken = verify(token, authConfig.jwt.secret);
+
+    const { sub } = decodeToken as TokenPayload;
+
+    request.user = {
+      id: sub
+    };
 
     return next();
   }

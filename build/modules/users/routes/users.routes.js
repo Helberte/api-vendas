@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const UsersController_1 = __importDefault(require("../controlers/UsersController"));
 const celebrate_1 = require("celebrate");
-const isAuthenticated_1 = __importDefault(require("src/modules/middlewares/isAuthenticated"));
+const isAuthenticated_1 = __importDefault(require("src/shared/http/middlewares/isAuthenticated"));
 const usersRouter = (0, express_1.Router)();
 const usersController = new UsersController_1.default();
 // lista usuarios
