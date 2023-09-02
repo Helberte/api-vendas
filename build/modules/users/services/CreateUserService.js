@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const UsersRepository_1 = require("../typeorm/repositories/UsersRepository");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
+const bcryptjs_1 = require("bcryptjs");
 class CreateUserService {
     execute({ name, email, password }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,10 +23,12 @@ class CreateUserService {
             const emailUserExists = yield userRepositoy.findByEmail(email);
             if (emailUserExists)
                 throw new AppError_1.default('Já existe um email igual a este cadastrado, tente outro.');
+            // cria hash na senha
+            const hashedPassword = yield (0, bcryptjs_1.hash)(password, 8);
             const user = userRepositoy.create({
                 name,
                 email,
-                password
+                password: hashedPassword
             });
             yield userRepositoy.save(user);
             return user;

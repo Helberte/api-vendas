@@ -9,7 +9,9 @@ const celebrate_1 = require("celebrate");
 'celebrate';
 const usersRouter = (0, express_1.Router)();
 const usersController = new UsersController_1.default();
+// lista usuarios
 usersRouter.get('/', usersController.index);
+// create users
 usersRouter.post('/', (0, celebrate_1.celebrate)({
     [celebrate_1.Segments.BODY]: {
         name: celebrate_1.Joi.string().required(),
