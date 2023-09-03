@@ -11,9 +11,12 @@ const celebrate_1 = require("celebrate");
 const routes_1 = __importDefault(require("./routes"));
 const AppError_1 = __importDefault(require("../errors/AppError"));
 require("../typeorm");
+const upload_1 = __importDefault(require("src/config/upload"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+app.use('/files', express_1.default.static(upload_1.default.directory)); // rota statica para obter os arquivos de usuário do servidor
+// isso serve para facilitar o acesso a esta imagem por parte do front-end
 app.use(routes_1.default);
 app.use((0, celebrate_1.errors)());
 app.use((error, request, response, next) => {
