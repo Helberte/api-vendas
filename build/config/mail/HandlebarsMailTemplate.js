@@ -13,10 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const handlebars_1 = __importDefault(require("handlebars"));
+const fs_1 = __importDefault(require("fs"));
 class handlebarsMailTemplate {
-    parce({ template, variables }) {
+    parce({ file, variables }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const parseTemplate = handlebars_1.default.compile(template);
+            const templateFileContent = yield fs_1.default.promises.readFile(file, { encoding: 'utf-8' });
+            const parseTemplate = handlebars_1.default.compile(templateFileContent);
             return parseTemplate(variables);
         });
     }

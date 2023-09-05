@@ -17,6 +17,7 @@ const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
 const UsersRepository_1 = require("../typeorm/repositories/UsersRepository");
 const UsersTokensRepository_1 = require("../typeorm/repositories/UsersTokensRepository");
 const EtherealMail_1 = __importDefault(require("src/config/mail/EtherealMail"));
+const path_1 = __importDefault(require("path"));
 class SendForgotPasswordEmailService {
     execute({ email }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -26,7 +27,7 @@ class SendForgotPasswordEmailService {
             if (!user)
                 throw new AppError_1.default('Email do usuário não encontrado na base.');
             const userToken = yield userTokensRepository.generate(user.id);
-            // console.log(userToken);
+            const forgotPasswordTemplate = path_1.default.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
             yield EtherealMail_1.default.sendMail({
                 to: {
                     name: user.name,
@@ -34,10 +35,10 @@ class SendForgotPasswordEmailService {
                 },
                 subject: '[API Vendas] Recuperação de senha.',
                 templateData: {
-                    template: `Olá {{user.name}} Solicitação de redefinição de senha recebida: {{userToken?.token}}`,
+                    file: forgotPasswordTemplate,
                     variables: {
                         name: user.name,
-                        token: userToken.token
+                        link: `http://localhost:3333/reset_password?token=${userToken.token}`
                     }
                 },
             });
