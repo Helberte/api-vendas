@@ -24,8 +24,18 @@ class SendForgotPasswordEmailService{
     // console.log(userToken);
 
     await EtherealMail.sendMail({
-      to: email,
-      body: `Olá ${user.name}, para recuperar sua senha, clique no link abaixo: token=${userToken?.token}`,
+      to: {
+        name: user.name,
+        email: user.email
+      },
+      subject: '[API Vendas] Recuperação de senha.',
+      templateData: {
+        template: `Olá {{name}} Solicitação de redefinição de senha recebida: {{token}}`,
+        variables: {
+          name: user.name,
+          token: userToken.token
+        }
+      },
     });
   }
 }

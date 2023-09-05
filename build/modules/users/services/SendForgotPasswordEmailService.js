@@ -28,8 +28,18 @@ class SendForgotPasswordEmailService {
             const userToken = yield userTokensRepository.generate(user.id);
             // console.log(userToken);
             yield EtherealMail_1.default.sendMail({
-                to: email,
-                body: `Olá ${user.name}, para recuperar sua senha, clique no link abaixo: token=${userToken}`,
+                to: {
+                    name: user.name,
+                    email: user.email
+                },
+                subject: '[API Vendas] Recuperação de senha.',
+                templateData: {
+                    template: `Olá {{user.name}} Solicitação de redefinição de senha recebida: {{userToken?.token}}`,
+                    variables: {
+                        name: user.name,
+                        token: userToken.token
+                    }
+                },
             });
         });
     }
