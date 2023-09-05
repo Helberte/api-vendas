@@ -34,6 +34,7 @@ class ResetPasswordService {
             if ((0, date_fns_1.isAfter)(Date.now(), compareDate))
                 throw new AppError_1.default('Token expirado.');
             user.password = yield (0, bcryptjs_1.hash)(password, 8);
+            yield userRepositoy.save(user);
         });
     }
 }

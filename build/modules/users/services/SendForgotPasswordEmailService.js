@@ -16,6 +16,7 @@ const typeorm_1 = require("typeorm");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
 const UsersRepository_1 = require("../typeorm/repositories/UsersRepository");
 const UsersTokensRepository_1 = require("../typeorm/repositories/UsersTokensRepository");
+const EtherealMail_1 = __importDefault(require("src/config/mail/EtherealMail"));
 class SendForgotPasswordEmailService {
     execute({ email }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -25,7 +26,11 @@ class SendForgotPasswordEmailService {
             if (!user)
                 throw new AppError_1.default('Email do usuário não encontrado na base.');
             const userToken = yield userTokensRepository.generate(user.id);
-            console.log(userToken);
+            // console.log(userToken);
+            yield EtherealMail_1.default.sendMail({
+                to: email,
+                body: `Olá ${user.name}, para recuperar sua senha, clique no link abaixo: token=${userToken}`,
+            });
         });
     }
 }
