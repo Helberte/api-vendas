@@ -8,9 +8,11 @@ const products_routes_1 = __importDefault(require("../../../modules/products/rou
 const users_routes_1 = __importDefault(require("../../../modules/users/routes/users.routes"));
 const sessions_routes_1 = __importDefault(require("src/modules/users/routes/sessions.routes"));
 const password_routes_1 = __importDefault(require("src/modules/users/routes/password.routes"));
+const profile_routes_1 = __importDefault(require("src/modules/users/routes/profile.routes"));
 const routes = (0, express_1.Router)();
 routes.use('/products', products_routes_1.default);
 routes.use('/users', users_routes_1.default);
 routes.use('/sessions', sessions_routes_1.default);
 routes.use('/password', password_routes_1.default);
+routes.use('/profile', profile_routes_1.default);
 exports.default = routes;

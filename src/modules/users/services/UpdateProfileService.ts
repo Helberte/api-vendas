@@ -33,8 +33,6 @@ class UpdateProfileService{
     if (userUpdateEmail && userUpdateEmail.id != user_id)
       throw new AppError('Email já está em uso.');
 
-    // verificar password e oldpassword no middleware
-
     const checkOldPassword = await compare(old_password, userCopy?.password || '')
 
     if (!checkOldPassword)
@@ -47,7 +45,7 @@ class UpdateProfileService{
 
       await userRepositoy.save(userCopy);
     }
-    
+
     return user;
   }
 }
