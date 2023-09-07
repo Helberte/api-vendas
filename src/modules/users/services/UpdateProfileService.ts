@@ -25,7 +25,7 @@ class UpdateProfileService{
     const user     = await userRepositoy.findById(user_id);
     const userCopy = user;
 
-    if (user)
+    if (!user)
       throw new AppError('Usuário não encontrado.');
 
     const userUpdateEmail = await userRepositoy.findByEmail(email);
@@ -41,7 +41,7 @@ class UpdateProfileService{
     if (userCopy) {
       userCopy.password = await hash(password, 8);
       userCopy.email = email;
-      userCopy.name = name;
+      userCopy.name = name.toUpperCase();
 
       await userRepositoy.save(userCopy);
     }

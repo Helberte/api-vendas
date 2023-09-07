@@ -14,7 +14,7 @@ class ShowProfileService{
 
     const user = await userRepositoy.findById(user_id);
 
-    if (user) {
+    if (!user) {
       throw new AppError('Usuário não encontrado.');
     }
 

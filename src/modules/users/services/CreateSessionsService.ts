@@ -12,7 +12,7 @@ interface IRequest{
 }
 
 interface IResponse{
-  user: User;
+  usuario: User;
   token: string;
 }
 
@@ -38,7 +38,7 @@ class CreateSessionsService{
     });
 
     return {
-      user: userEmail,
+      usuario: userEmail,
       token: token
     };
   }
