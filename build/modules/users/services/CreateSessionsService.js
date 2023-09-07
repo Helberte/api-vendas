@@ -35,7 +35,7 @@ class CreateSessionsService {
                 expiresIn: auth_1.default.jwt.expiresIn
             });
             return {
-                user: userEmail,
+                usuario: userEmail,
                 token: token
             };
         });

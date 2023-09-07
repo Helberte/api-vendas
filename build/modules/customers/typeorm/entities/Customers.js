@@ -10,33 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-let Product = class Product {
+let Customer = class Customer {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
-], Product.prototype, "id", void 0);
+], Customer.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Product.prototype, "name", void 0);
+], Customer.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)('decimal'),
-    __metadata("design:type", Number)
-], Product.prototype, "price", void 0);
-__decorate([
-    (0, typeorm_1.Column)('int'),
-    __metadata("design:type", Number)
-], Product.prototype, "quantity", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Customer.prototype, "email", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Product.prototype, "created_at", void 0);
+], Customer.prototype, "created_at", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Product.prototype, "updated_at", void 0);
-Product = __decorate([
-    (0, typeorm_1.Entity)('products')
-], Product);
-exports.default = Product;
+], Customer.prototype, "updated_at", void 0);
+Customer = __decorate([
+    (0, typeorm_1.Entity)('customers')
+], Customer);
+exports.default = Customer;

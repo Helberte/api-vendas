@@ -13,18 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const UsersRepository_1 = require("../typeorm/repositories/UsersRepository");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
-class ShowProfileService {
-    execute({ user_id }) {
+const CustomersRepository_1 = require("../typeorm/repositories/CustomersRepository");
+class UpdateCustomerService {
+    execute({ id, name, email }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepositoy = (0, typeorm_1.getCustomRepository)(UsersRepository_1.UsersRepository);
-            const user = yield userRepositoy.findById(user_id);
-            if (!user) {
-                throw new AppError_1.default('Usuário não encontrado.');
+            const customerRepositoy = (0, typeorm_1.getCustomRepository)(CustomersRepository_1.CustomersRepository);
+            const customer = yield customerRepositoy.findById(id);
+            const customerCopy = customer;
+            if (!customer)
+                throw new AppError_1.default('Cliente não encontrado.');
+            const customerUpdateEmail = yield customerRepositoy.findByEmail(email);
+            if (customerUpdateEmail && customerUpdateEmail.id != id)
+                throw new AppError_1.default('Email já está em uso.');
+            if (customerCopy) {
+                customerCopy.email = email;
+                customerCopy.name = name.toUpperCase();
+                yield customerRepositoy.save(customerCopy);
             }
-            return user;
+            return customerCopy;
         });
     }
 }
-exports.default = ShowProfileService;
+exports.default = UpdateCustomerService;

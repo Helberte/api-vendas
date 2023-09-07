@@ -8,19 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const CreateSessionsService_1 = __importDefault(require("../services/CreateSessionsService"));
-class SessionsController {
-    create(request, response) {
+const typeorm_1 = require("typeorm");
+const CustomersRepository_1 = require("../typeorm/repositories/CustomersRepository");
+class ListCustomersService {
+    execute() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { email, password } = request.body;
-            const createSessions = new CreateSessionsService_1.default();
-            const user = yield createSessions.execute({ email, password });
-            return response.json(user);
+            const customersRepositoy = (0, typeorm_1.getCustomRepository)(CustomersRepository_1.CustomersRepository);
+            const customers = yield customersRepositoy.find();
+            return customers;
         });
     }
 }
-exports.default = SessionsController;
+exports.default = ListCustomersService;

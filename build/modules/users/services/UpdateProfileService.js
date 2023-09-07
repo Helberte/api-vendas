@@ -22,7 +22,7 @@ class UpdateProfileService {
             const userRepositoy = (0, typeorm_1.getCustomRepository)(UsersRepository_1.UsersRepository);
             const user = yield userRepositoy.findById(user_id);
             const userCopy = user;
-            if (user)
+            if (!user)
                 throw new AppError_1.default('Usuário não encontrado.');
             const userUpdateEmail = yield userRepositoy.findByEmail(email);
             if (userUpdateEmail && userUpdateEmail.id != user_id)
@@ -33,7 +33,7 @@ class UpdateProfileService {
             if (userCopy) {
                 userCopy.password = yield (0, bcryptjs_1.hash)(password, 8);
                 userCopy.email = email;
-                userCopy.name = name;
+                userCopy.name = name.toUpperCase();
                 yield userRepositoy.save(userCopy);
             }
             return user;

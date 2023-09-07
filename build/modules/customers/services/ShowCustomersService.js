@@ -12,15 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CreateSessionsService_1 = __importDefault(require("../services/CreateSessionsService"));
-class SessionsController {
-    create(request, response) {
+const typeorm_1 = require("typeorm");
+const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
+const CustomersRepository_1 = require("../typeorm/repositories/CustomersRepository");
+class ShowCustomersService {
+    execute({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { email, password } = request.body;
-            const createSessions = new CreateSessionsService_1.default();
-            const user = yield createSessions.execute({ email, password });
-            return response.json(user);
+            const customersRepositoy = (0, typeorm_1.getCustomRepository)(CustomersRepository_1.CustomersRepository);
+            const customer = yield customersRepositoy.findById(id);
+            if (!customer) {
+                throw new AppError_1.default('Usuário não encontrado.');
+            }
+            return customer;
         });
     }
 }
-exports.default = SessionsController;
+exports.default = ShowCustomersService;
