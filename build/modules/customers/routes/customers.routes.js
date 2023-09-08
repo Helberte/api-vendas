@@ -4,67 +4,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const celebrate_1 = require("celebrate");
 const CustomersController_1 = __importDefault(require("../controllers/CustomersController"));
+const isAuthenticated_1 = __importDefault(require("src/shared/http/middlewares/isAuthenticated"));
 const productsRouter = (0, express_1.Router)();
 const customersControler = new CustomersController_1.default();
 // index
-productsRouter.get('/', customersControler.index);
-/*
+productsRouter.get('/', isAuthenticated_1.default, customersControler.index);
 // show
-productsRouter.get(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]:
-    {
-      id: Joi.string().uuid().required()
+productsRouter.get('/:id', (0, celebrate_1.celebrate)({
+    [celebrate_1.Segments.PARAMS]: {
+        id: celebrate_1.Joi.string().uuid().required()
     }
-  }),
-  productsControler.show
-);
-
+}), customersControler.show);
 // create
-productsRouter.post(
-  '/',
-  celebrate({
-    [Segments.BODY]: Joi.object().keys(
-      {
-        name: Joi.string().required(),
-        price: Joi.number().precision(2).required(),
-        quantity: Joi.number().required()
-      }
-    )
-  }),
-  productsControler.create
-);
-
+productsRouter.post('/', (0, celebrate_1.celebrate)({
+    [celebrate_1.Segments.BODY]: celebrate_1.Joi.object().keys({
+        name: celebrate_1.Joi.string().required(),
+        email: celebrate_1.Joi.string().email().required(),
+    })
+}), customersControler.create);
 // update
-productsRouter.put(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]:
-    {
-      id: Joi.string().uuid().required()
+productsRouter.put('/:id', (0, celebrate_1.celebrate)({
+    [celebrate_1.Segments.PARAMS]: {
+        id: celebrate_1.Joi.string().uuid().required()
     },
-    [Segments.BODY]:
-    {
-      name:     Joi.string().required(),
-      price:    Joi.number().precision(2).required(),
-      quantity: Joi.number().required()
+    [celebrate_1.Segments.BODY]: {
+        name: celebrate_1.Joi.string().required(),
+        email: celebrate_1.Joi.string().email().required(),
     }
-  }),
-  productsControler.update
-);
-
+}), customersControler.update);
 // delete
-productsRouter.delete(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]:
-    {
-      id: Joi.string().uuid().required()
+productsRouter.delete('/:id', (0, celebrate_1.celebrate)({
+    [celebrate_1.Segments.PARAMS]: {
+        id: celebrate_1.Joi.string().uuid().required()
     }
-    }),
-  productsControler.delete
-);
-
-export default productsRouter;*/ 
+}), customersControler.delete);
+exports.default = productsRouter;

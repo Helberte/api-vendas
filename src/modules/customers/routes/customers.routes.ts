@@ -12,6 +12,7 @@ productsRouter.get('/', isAuthenticated, customersControler.index);
 // show
 productsRouter.get(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]:
     {
@@ -24,6 +25,7 @@ productsRouter.get(
 // create
 productsRouter.post(
   '/',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: Joi.object().keys(
       {
@@ -38,6 +40,7 @@ productsRouter.post(
 // update
 productsRouter.put(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]:
     {
@@ -55,6 +58,7 @@ productsRouter.put(
 // delete
 productsRouter.delete(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]:
     {
