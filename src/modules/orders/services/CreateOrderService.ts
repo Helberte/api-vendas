@@ -29,6 +29,20 @@ class CreateOrderService{
 
     const existsProducts = await productsRepositoy.findAllByIds(products);
 
+    if (!existsProducts.length)
+      throw new AppError('Nenhum dos produtos informados existem cadastrados.');
+
+    // pega todos os produtos existentes
+    const existsProductsId = existsProducts.map((product) => product.id);
+
+    // pega os que não existem
+    const checkInexistentProducts = products.filter(
+      product => !existsProductsId.includes(product.id)
+    )
+
+    if (checkInexistentProducts.length)
+      throw new AppError(`Alguns produtos não foram encontrados no cadastro. ${checkInexistentProducts} `);
+
     
   }
 }
