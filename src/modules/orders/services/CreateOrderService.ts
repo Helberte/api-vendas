@@ -20,22 +20,16 @@ class CreateOrderService{
   public async execute({ customer_id, products }: IRequest) : Promise<Order> {
     const ordersRepositoy   = getCustomRepository(OrdersRepository);
     const customerRepositoy = getCustomRepository(CustomersRepository);
-    const productRepositoy  = getCustomRepository(ProductRepository);
+    const productsRepositoy  = getCustomRepository(ProductRepository);
 
     const customerExists = await customerRepositoy.findById(customer_id);
 
     if(!customerExists)
       throw new AppError('Não existe este cliente.');
 
-    const product = productsRepositoy.create({
-      name,
-      price,
-      quantity,
-    });
+    const existsProducts = await productsRepositoy.findAllByIds(products);
 
-    await productsRepositoy.save(product);
-
-    return product;
+    
   }
 }
 
