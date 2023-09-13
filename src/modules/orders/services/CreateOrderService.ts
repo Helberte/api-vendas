@@ -17,7 +17,7 @@ interface IRequest{
 
 class CreateOrderService{
 
-  public async execute({ customer_id, products }: IRequest) : Promise<Order> {
+  public async execute({ customer_id, products }: IRequest) : Promise<Order | undefined> {
     const ordersRepositoy   = getCustomRepository(OrdersRepository);
     const customerRepositoy = getCustomRepository(CustomersRepository);
     const productsRepositoy  = getCustomRepository(ProductRepository);
@@ -66,7 +66,18 @@ class CreateOrderService{
       products: serializedProducts
     });
 
-    
+    const {  order_products } = order as Order;
+
+    const updatedProductQuantity = order_products.map(
+      product => ({
+        id: product.product_id,
+        quantity: existsProducts.filter(p => p.id === product.id)[0].quantity - product.quantity
+      })
+    );
+
+    await productsRepositoy.save(updatedProductQuantity);
+
+    return order;
   }
 }
 
