@@ -43,7 +43,16 @@ class CreateOrderService{
     if (checkInexistentProducts.length)
       throw new AppError(`Alguns produtos não foram encontrados no cadastro. ${checkInexistentProducts} `);
 
-    
+    const quantityAvailable = products.filter(
+      product => existsProducts.filter(
+        p => p.id === product.id
+      )[0].quantity < product.quantity
+    );
+
+    // não permite vender uma quantidade menor do que tem no estoque
+    if (quantityAvailable.length)
+      throw new AppError(`A quantidade. ${quantityAvailable[0].quantity} não é valida para o produto: ${quantityAvailable[0].id}`);
+
   }
 }
 
