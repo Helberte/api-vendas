@@ -53,6 +53,20 @@ class CreateOrderService{
     if (quantityAvailable.length)
       throw new AppError(`A quantidade. ${quantityAvailable[0].quantity} não é valida para o produto: ${quantityAvailable[0].id}`);
 
+    const serializedProducts = products.map(
+      product => ({
+        product_id: product.id,
+        quantity: product.quantity,
+        price: existsProducts.filter(p => p.id === product.id)[0].price
+      })
+    );
+
+    const order = await ordersRepositoy.createOrder({
+      customer: customerExists,
+      products: serializedProducts
+    });
+
+    
   }
 }
 
