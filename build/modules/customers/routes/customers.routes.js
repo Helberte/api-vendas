@@ -12,20 +12,20 @@ const customersControler = new CustomersController_1.default();
 // index
 productsRouter.get('/', isAuthenticated_1.default, customersControler.index);
 // show
-productsRouter.get('/:id', (0, celebrate_1.celebrate)({
+productsRouter.get('/:id', isAuthenticated_1.default, (0, celebrate_1.celebrate)({
     [celebrate_1.Segments.PARAMS]: {
         id: celebrate_1.Joi.string().uuid().required()
     }
 }), customersControler.show);
 // create
-productsRouter.post('/', (0, celebrate_1.celebrate)({
+productsRouter.post('/', isAuthenticated_1.default, (0, celebrate_1.celebrate)({
     [celebrate_1.Segments.BODY]: celebrate_1.Joi.object().keys({
         name: celebrate_1.Joi.string().required(),
         email: celebrate_1.Joi.string().email().required(),
     })
 }), customersControler.create);
 // update
-productsRouter.put('/:id', (0, celebrate_1.celebrate)({
+productsRouter.put('/:id', isAuthenticated_1.default, (0, celebrate_1.celebrate)({
     [celebrate_1.Segments.PARAMS]: {
         id: celebrate_1.Joi.string().uuid().required()
     },
@@ -35,7 +35,7 @@ productsRouter.put('/:id', (0, celebrate_1.celebrate)({
     }
 }), customersControler.update);
 // delete
-productsRouter.delete('/:id', (0, celebrate_1.celebrate)({
+productsRouter.delete('/:id', isAuthenticated_1.default, (0, celebrate_1.celebrate)({
     [celebrate_1.Segments.PARAMS]: {
         id: celebrate_1.Joi.string().uuid().required()
     }

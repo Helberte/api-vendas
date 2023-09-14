@@ -20,7 +20,7 @@ class CreateOrderService{
   public async execute({ customer_id, products }: IRequest) : Promise<Order | undefined> {
     const ordersRepositoy   = getCustomRepository(OrdersRepository);
     const customerRepositoy = getCustomRepository(CustomersRepository);
-    const productsRepositoy  = getCustomRepository(ProductRepository);
+    const productsRepositoy = getCustomRepository(ProductRepository);
 
     const customerExists = await customerRepositoy.findById(customer_id);
 
@@ -71,7 +71,7 @@ class CreateOrderService{
     const updatedProductQuantity = order_products.map(
       product => ({
         id: product.product_id,
-        quantity: existsProducts.filter(p => p.id === product.id)[0].quantity - product.quantity
+        quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity - product.quantity
       })
     );
 

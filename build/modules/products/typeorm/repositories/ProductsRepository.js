@@ -24,12 +24,23 @@ const Product_1 = __importDefault(require("../entities/Product"));
 let ProductRepository = class ProductRepository extends typeorm_1.Repository {
     findByName(name) {
         return __awaiter(this, void 0, void 0, function* () {
-            const product = this.findOne({
+            const product = yield this.findOne({
                 where: {
                     name
                 }
             });
             return product;
+        });
+    }
+    findAllByIds(products) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const productsIds = products.map(product => product.id);
+            const existsProducts = yield this.find({
+                where: {
+                    id: (0, typeorm_1.In)(productsIds)
+                }
+            });
+            return existsProducts;
         });
     }
 };
