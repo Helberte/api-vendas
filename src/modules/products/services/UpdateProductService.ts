@@ -37,8 +37,9 @@ class UpdateProductService{
     product.price = price;
     product.quantity = quantity;
 
+    // invalida cache
     await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-    
+
     await productRepository.save(product);
 
     return product;
