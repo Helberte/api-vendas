@@ -2,6 +2,7 @@ import { Not, getCustomRepository } from "typeorm";
 import Product from "../typeorm/entities/Product";
 import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
 import AppError from "src/shared/errors/AppError";
+import RedisCache from "src/shared/cache/RedisCache";
 
 interface IRequest{
   id: string;
@@ -26,14 +27,18 @@ class UpdateProductService{
         id: Not(id),
       },
     });
-    
+
     if (productName)
       throw new AppError('Já existe um produto com este nome.');
+
+    const redisCache = new RedisCache();
 
     product.name  = name;
     product.price = price;
     product.quantity = quantity;
 
+    await redisCache.invalidate('api-vendas-PRODUCT_LIST');
+    
     await productRepository.save(product);
 
     return product;
