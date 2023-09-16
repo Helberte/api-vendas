@@ -8,11 +8,15 @@ import routes from './routes';
 import AppError from '../errors/AppError';
 import '../typeorm';
 import uploadConfig from 'src/config/upload';
+import rateLimiter from './middlewares/rateLimiter';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(rateLimiter);
+
 app.use('/files', express.static(uploadConfig.directory)); // rota statica para obter os arquivos de usuário do servidor
 // isso serve para facilitar o acesso a esta imagem por parte do front-end
 app.use(routes);
