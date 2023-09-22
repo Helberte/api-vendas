@@ -4,9 +4,16 @@ import uploadConfig from 'src/config/upload';
 
 export default class DiskStorageProvider {
   public async saveFile(file: string): Promise<string> {
+
+    // usado para renomear de forma assíncrona um arquivo em um
+    // determinado caminho antigo para um determinado novo caminho.
+    // Ele substituirá o arquivo de destino se ele já existir.
+    // Ele resolve a promessa sem argumentos após o sucesso
     await fs.promises.rename(
-      path.resolve(uploadConfig.tmpFolder, file),
-      path.resolve(uploadConfig.directory, file)
+      
+      // o metodo resolve, junta partes de caminhos em apenas um
+      path.resolve(uploadConfig.directory, file),
+      path.resolve(uploadConfig.tmpFolder, file)
     );
 
     return file;

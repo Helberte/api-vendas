@@ -15,13 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const ProductsRepository_1 = require("../typeorm/repositories/ProductsRepository");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
+const RedisCache_1 = __importDefault(require("src/shared/cache/RedisCache"));
 class DeleteProductService {
     execute({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             const productRepository = (0, typeorm_1.getCustomRepository)(ProductsRepository_1.ProductRepository);
+            const redisCache = new RedisCache_1.default();
             const product = yield productRepository.findOne(id);
             if (!product)
                 throw new AppError_1.default('Produto não existe');
+            // invalida o cache
+            yield redisCache.invalidate('api-vendas-PRODUCT_LIST');
             yield productRepository.remove(product);
         });
     }

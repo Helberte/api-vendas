@@ -10,7 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const class_transformer_1 = require("class-transformer");
 let User = class User {
+    getAvatarUrl() {
+        if (!this.avatar) {
+            return null;
+        }
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
@@ -26,6 +33,8 @@ __decorate([
 ], User.prototype, "email", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, class_transformer_1.Exclude)() // da class-transformer -> diz para não retornar este campo nas consultas
+    ,
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
@@ -40,6 +49,12 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], User.prototype, "updated_at", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)({ name: 'avatar_url' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], User.prototype, "getAvatarUrl", null);
 User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

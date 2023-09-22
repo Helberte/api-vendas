@@ -15,25 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const UsersRepository_1 = require("../typeorm/repositories/UsersRepository");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
-const path_1 = __importDefault(require("path"));
-const upload_1 = __importDefault(require("src/config/upload"));
-const fs_1 = __importDefault(require("fs"));
+const DiskStorageProvider_1 = __importDefault(require("src/shared/providers/StorageProvider/DiskStorageProvider"));
 class UpdateUserAvatarService {
     execute({ user_id, avatarFilename }) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepositoy = (0, typeorm_1.getCustomRepository)(UsersRepository_1.UsersRepository);
+            const storageProvider = new DiskStorageProvider_1.default();
             const user = yield userRepositoy.findById(user_id);
             if (!user)
                 throw new AppError_1.default('Usuário não existe.');
             // se existir arquivo no server, apaga
             if (user.avatar) {
-                const userAvatarFilePath = path_1.default.join(upload_1.default.directory, user.avatar); // pega o caminho completo do arquivo caso exista
-                const userAvatarFileExists = yield fs_1.default.promises.stat(userAvatarFilePath); // verifica o status do arquivo passado por param
-                if (userAvatarFileExists) {
-                    yield fs_1.default.promises.unlink(userAvatarFilePath); // remove o arquivo
-                }
+                yield storageProvider.deleFile(user.avatar);
             }
-            user.avatar = avatarFilename;
+            let filename = "";
+            if (avatarFilename)
+                filename = yield storageProvider.saveFile(avatarFilename);
+            user.avatar = filename;
             yield userRepositoy.save(user);
             return user;
         });

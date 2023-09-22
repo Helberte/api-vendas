@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const UpdateUserAvatarService_1 = __importDefault(require("../services/UpdateUserAvatarService"));
+const class_transformer_1 = require("class-transformer");
 class UserAvatarController {
     update(request, response) {
         var _a;
@@ -22,7 +23,7 @@ class UserAvatarController {
                 user_id: request.user.id,
                 avatarFilename: (_a = request.file) === null || _a === void 0 ? void 0 : _a.filename
             });
-            return response.json({ usuario: user });
+            return response.json({ usuario: (0, class_transformer_1.instanceToInstance)(user) });
         });
     }
 }

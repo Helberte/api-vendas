@@ -13,13 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const CreateSessionsService_1 = __importDefault(require("../services/CreateSessionsService"));
+const class_transformer_1 = require("class-transformer");
 class SessionsController {
     create(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { email, password } = request.body;
             const createSessions = new CreateSessionsService_1.default();
             const user = yield createSessions.execute({ email, password });
-            return response.json(user);
+            return response.json((0, class_transformer_1.instanceToInstance)(user));
         });
     }
 }

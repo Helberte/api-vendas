@@ -14,13 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ShowProfileService_1 = __importDefault(require("../services/ShowProfileService"));
 const UpdateProfileService_1 = __importDefault(require("../services/UpdateProfileService"));
+const class_transformer_1 = require("class-transformer");
 class ProfileController {
     show(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const showProfile = new ShowProfileService_1.default();
             const user_id = request.user.id;
             const user = yield showProfile.execute({ user_id });
-            return response.json({ usuario: user });
+            return response.json({ usuario: (0, class_transformer_1.instanceToInstance)(user) }); // instanceToInstance aplica a modificacao que foi colocada no model de user
         });
     }
     update(request, response) {
@@ -35,7 +36,7 @@ class ProfileController {
                 password: password,
                 old_password: old_password
             });
-            return response.json({ usuario: user });
+            return response.json({ usuario: (0, class_transformer_1.instanceToInstance)(user) });
         });
     }
 }

@@ -14,12 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ListUserService_1 = __importDefault(require("../services/ListUserService"));
 const CreateUserService_1 = __importDefault(require("../services/CreateUserService"));
+const class_transformer_1 = require("class-transformer");
 class UsersController {
     index(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const listUsers = new ListUserService_1.default();
             const users = yield listUsers.execute();
-            return response.json({ usuarios: users });
+            return response.json({ usuarios: (0, class_transformer_1.instanceToInstance)(users) });
         });
     }
     create(request, response) {
@@ -31,7 +32,7 @@ class UsersController {
                 email,
                 password
             });
-            return response.json({ usuario: user });
+            return response.json({ usuario: (0, class_transformer_1.instanceToInstance)(user) });
         });
     }
 }

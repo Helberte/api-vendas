@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const ProductsRepository_1 = require("../typeorm/repositories/ProductsRepository");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
+const RedisCache_1 = __importDefault(require("src/shared/cache/RedisCache"));
 class CreateProductService {
     execute({ name, price, quantity }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,11 +23,14 @@ class CreateProductService {
             const productExists = yield productsRepositoy.findByName(name);
             if (productExists)
                 throw new AppError_1.default('Já existe um produto com este nome.');
+            const redisCache = new RedisCache_1.default();
             const product = productsRepositoy.create({
                 name,
                 price,
                 quantity,
             });
+            // invalida o cache salvo no redis visto que foi feito uma alteração nos produtos
+            yield redisCache.invalidate('api-vendas-PRODUCT_LIST');
             yield productsRepositoy.save(product);
             return product;
         });
