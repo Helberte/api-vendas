@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const celebrate_1 = require("celebrate");
 const CustomersController_1 = __importDefault(require("../controllers/CustomersController"));
-const isAuthenticated_1 = __importDefault(require("src/shared/http/middlewares/isAuthenticated"));
+const isAuthenticated_1 = __importDefault(require("../../../shared/http/middlewares/isAuthenticated"));
 const productsRouter = (0, express_1.Router)();
 const customersControler = new CustomersController_1.default();
 // index

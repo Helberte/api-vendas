@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const ProductsRepository_1 = require("../typeorm/repositories/ProductsRepository");
-const RedisCache_1 = __importDefault(require("src/shared/cache/RedisCache"));
+const RedisCache_1 = __importDefault(require("../../../shared/cache/RedisCache"));
 class ListProductService {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {

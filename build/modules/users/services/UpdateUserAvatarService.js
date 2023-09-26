@@ -21,6 +21,7 @@ class UpdateUserAvatarService {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepositoy = (0, typeorm_1.getCustomRepository)(UsersRepository_1.UsersRepository);
             const storageProvider = new DiskStorageProvider_1.default();
+            // pega o usuário no banco
             const user = yield userRepositoy.findById(user_id);
             if (!user)
                 throw new AppError_1.default('Usuário não existe.');

@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = require("jsonwebtoken");
 const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
-const auth_1 = __importDefault(require("src/config/auth"));
 function isAuthenticated(request, response, next) {
     // pega o token que o usuário enviou no header da requisição
     const authHeader = request.headers.authorization;
@@ -17,7 +16,7 @@ function isAuthenticated(request, response, next) {
     // saber se o tken foi o mesmo criado com o secret da aplicacao
     try {
         // caso não de erro é porque está autorizado
-        const decodeToken = (0, jsonwebtoken_1.verify)(token, auth_1.default.jwt.secret);
+        const decodeToken = (0, jsonwebtoken_1.verify)(token, "ac2b7893067c581dc0f4f3b6e0441d95");
         const { sub } = decodeToken;
         request.user = {
             id: sub

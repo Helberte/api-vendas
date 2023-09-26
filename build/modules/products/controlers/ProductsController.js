@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ListProductService_1 = __importDefault(require("../services/ListProductService"));
 const ShowProductService_1 = __importDefault(require("../services/ShowProductService"));
 const CreateProductService_1 = __importDefault(require("../services/CreateProductService"));
-const AppError_1 = __importDefault(require("src/shared/errors/AppError"));
+const AppError_1 = __importDefault(require("../../../shared/errors/AppError"));
 const UpdateProductService_1 = __importDefault(require("../services/UpdateProductService"));
 const DeleteProductservice_1 = __importDefault(require("../services/DeleteProductservice"));
 class ProductsController {

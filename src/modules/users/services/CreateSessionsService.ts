@@ -32,7 +32,7 @@ class CreateSessionsService{
       throw new AppError('Dados incorretos: Email/Senha..', 401);
 
     // este metodo cria o token com base neste segundo parametro, ele meio que assina o token com base neste
-    const token = sign({ }, authConfig.jwt.secret, {
+    const token = sign({ }, "ac2b7893067c581dc0f4f3b6e0441d95", {
       subject: userEmail.id,
       expiresIn: authConfig.jwt.expiresIn
     });

@@ -25,7 +25,7 @@ export default function isAuthenticated(request: Request, response: Response, ne
   try {
 
     // caso não de erro é porque está autorizado
-    const decodeToken = verify(token, authConfig.jwt.secret);
+    const decodeToken = verify(token, "ac2b7893067c581dc0f4f3b6e0441d95");
 
     const { sub } = decodeToken as ITokenPayload;
 
